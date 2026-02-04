@@ -16,7 +16,7 @@ if(NOT SDL3_LIBRARY)
 endif()
 
 # Create executable
-add_executable(helloSDL3 main.cpp)
+add_executable(helloSDL3 hello_sdl3.cpp)
 
 # Link SDL3 framework
 target_link_libraries(helloSDL3 ${SDL3_LIBRARY})
@@ -27,7 +27,7 @@ set_target_properties(helloSDL3 PROPERTIES
     INSTALL_RPATH "/Library/Frameworks;@executable_path/../Frameworks"
 )
 
-# clang++ main.cpp -o out \
+# clang++ hello_sdl3.cpp -o out \
 #   -F /Library/Frameworks \
 #   -framework SDL3 \
 #   -Wl,-rpath,/Library/Frameworks \

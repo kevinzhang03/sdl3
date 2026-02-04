@@ -101,6 +101,12 @@ int main(int argc, char* args[]) {
                     if (e.type == SDL_EVENT_QUIT) {
                         quit = true;
                     }
+                    switch(e.type) {
+                        case SDL_EVENT_QUIT:
+                            quit = true;
+                        case SDL_EVENT_MOUSE_MOTION:
+                            SDL_Log("Mouse moved!\n");
+                    }
                 }
 
                 // Fill surface white
