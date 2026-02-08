@@ -55,7 +55,7 @@ bool loadMedia() {
         gHelloWorld = SDL_LoadBMP(imagePath.c_str());
         gHelloWorld == nullptr
     ) {
-        SDL_Log("Unable to load image %s! SDL error: %\n", imagePath.c_str(), SDL_GetError());
+        SDL_Log("Unable to load image %s! SDL error: %s\n", imagePath.c_str(), SDL_GetError());
         success = false;
     }
 

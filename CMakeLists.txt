@@ -15,17 +15,32 @@ if(NOT SDL3_LIBRARY)
     message(FATAL_ERROR "SDL3 framework not found in /Library/Frameworks")
 endif()
 
-# Create executable
-add_executable(helloSDL3 hello_sdl3.cpp)
-
-# Link SDL3 framework
-target_link_libraries(helloSDL3 ${SDL3_LIBRARY})
-
-# Set rpath for runtime library loading
-set_target_properties(helloSDL3 PROPERTIES
-    BUILD_RPATH "/Library/Frameworks"
-    INSTALL_RPATH "/Library/Frameworks;@executable_path/../Frameworks"
+# Find SDL3_image framework
+find_library(SDL3_IMAGE_LIBRARY 
+    NAMES SDL3_image
+    PATHS /Library/Frameworks
+    NO_DEFAULT_PATH
 )
+
+if(NOT SDL3_IMAGE_LIBRARY)
+    message(FATAL_ERROR "SDL3_image framework not found in /Library/Frameworks")
+endif()
+
+# Glob all .cpp files
+file(GLOB CPP_SOURCES "*.cpp")
+
+# Create an executable for each .cpp file
+foreach(SOURCE_FILE ${CPP_SOURCES})
+    get_filename_component(EXEC_NAME ${SOURCE_FILE} NAME_WE)
+    
+    add_executable(${EXEC_NAME} ${SOURCE_FILE})
+    target_link_libraries(${EXEC_NAME} ${SDL3_LIBRARY} ${SDL3_IMAGE_LIBRARY})
+    
+    set_target_properties(${EXEC_NAME} PROPERTIES
+        BUILD_RPATH "/Library/Frameworks"
+        INSTALL_RPATH "/Library/Frameworks;@executable_path/../Frameworks"
+    )
+endforeach()
 
 # clang++ hello_sdl3.cpp -o out \
 #   -F /Library/Frameworks \
